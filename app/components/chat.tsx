@@ -728,14 +728,8 @@ export function Chat(props: {
             onClick={onUserSubmit}
             disabled = {isLoading}
           />
-
         </div>
       </div>
-      <IconButton
-            icon={<ReturnIcon />}
-            text={'loading:' + isLoading}
-            noDark
-          />
     </div>
     
   );
