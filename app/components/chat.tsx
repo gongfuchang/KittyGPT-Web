@@ -726,9 +726,17 @@ export function Chat(props: {
             className={styles["chat-input-send"]}
             noDark
             onClick={onUserSubmit}
+            disabled = {isLoading}
           />
+
         </div>
       </div>
+      <IconButton
+            icon={<ReturnIcon />}
+            text={'loading:' + isLoading}
+            noDark
+          />
     </div>
+    
   );
 }

@@ -51,7 +51,6 @@ const useLazyLoad = (ref: RefObject<Element>): boolean => {
 };
 
 export function Markdown(props: { content: string }) {
-  console.error('md==>' + props.content);
   return (
     <ReactMarkdown
       remarkPlugins={[RemarkMath, RemarkGfm, RemarkBreaks]}

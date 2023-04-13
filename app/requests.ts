@@ -22,9 +22,7 @@ const makeRequestParam = (
 
   const modelConfig = { ...useChatStore.getState().config.modelConfig };
 
-  // @yidadaa: wont send max_tokens, because it is nonsense for Muggles
-  // @ts-expect-error
-  delete modelConfig.max_tokens;
+  // delete modelConfig.max_tokens;
 
   return {
     messages: sendMessages,
@@ -33,6 +31,13 @@ const makeRequestParam = (
   };
 };
 
+function getPrefixRoute(stream: boolean){
+  const modelConfig = { ...useChatStore.getState().config.modelConfig };
+  const modelPrefix = modelConfig.model == 'chatglm-6b' ? 'glm' : 'openai';
+  const streamSurfix = stream ? '-stream' : '';
+  return `api/${modelPrefix}${streamSurfix}`;
+
+}
 function getHeaders() {
   const accessStore = useAccessStore.getState();
   let headers: Record<string, string> = {};
@@ -48,9 +53,9 @@ function getHeaders() {
   return headers;
 }
 
-export function requestOpenaiClient(path: string) {
+export function requestModelAgent(path: string) {
   return (body: any, method = "POST") =>
-    fetch("/api/openai?_vercel_no_cache=1", {
+    fetch(getPrefixRoute(false) + "?_vercel_no_cache=1", {
       method,
       headers: {
         "Content-Type": "application/json",
@@ -59,19 +64,6 @@ export function requestOpenaiClient(path: string) {
       },
       body: body && JSON.stringify(body),
     });
-}
-
-export async function requestChat(messages: Message[]) {
-  const req: ChatRequest = makeRequestParam(messages, { filterBot: true });
-
-  const res = await requestOpenaiClient("v1/chat/completions")(req);
-
-  try {
-    const response = (await res.json()) as ChatReponse;
-    return response;
-  } catch (error) {
-    console.error("[Request Chat] ", error, res.body);
-  }
 }
 
 export async function requestUsage() {
@@ -87,10 +79,10 @@ export async function requestUsage() {
   const endDate = formatDate(now);
 
   const [used, subs] = await Promise.all([
-    requestOpenaiClient(
+    requestModelAgent(
       `dashboard/billing/usage?start_date=${startDate}&end_date=${endDate}`,
     )(null, "GET"),
-    requestOpenaiClient("dashboard/billing/subscription")(null, "GET"),
+    requestModelAgent("dashboard/billing/subscription")(null, "GET"),
   ]);
 
   const response = (await used.json()) as {
@@ -141,7 +133,7 @@ export async function requestChatStream(
   const reqTimeoutId = setTimeout(() => controller.abort(), TIME_OUT_MS);
 
   try {
-    const res = await fetch("/api/openai-stream", {
+    const res = await fetch(getPrefixRoute(true), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -196,7 +188,7 @@ export async function requestChatStream(
   }
 }
 
-export async function requestWithPrompt(messages: Message[], prompt: string) {
+export async function requestDialogTopic(messages: Message[], prompt: string) {
   messages = messages.concat([
     {
       role: "user",
@@ -205,9 +197,23 @@ export async function requestWithPrompt(messages: Message[], prompt: string) {
     },
   ]);
 
-  const res = await requestChat(messages);
+  const req: ChatRequest = makeRequestParam(messages, { filterBot: true });
 
-  return res?.choices?.at(0)?.message?.content ?? "";
+  try {  
+    const res = await requestModelAgent("v1/chat/completions")(req);
+    const contentType = res.headers?.get('Content-Type') ?? 'text/plain'
+
+    if(contentType == 'text/plain'){
+      return res.text();
+    }else{
+      const cr = (await res.json()) as ChatReponse
+      return cr?.choices?.at(0)?.message?.content ?? "";
+    }
+  } catch (error) {
+    console.error("[Request Dialog Topic] ", error);
+  }
+  return '';
+
 }
 
 // To store message streaming controller

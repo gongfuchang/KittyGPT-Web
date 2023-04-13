@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requestOpenai } from "../openai-utils";
+import { requestOpenai } from "./request-utils";
 
 async function makeRequest(req: NextRequest) {
   try {

@@ -1,6 +1,6 @@
 import { createParser } from "eventsource-parser";
 import { NextRequest } from "next/server";
-import { requestOpenai } from "../openai-utils";
+import { requestOpenai } from "../openai/request-utils";
 
 async function createStream(req: NextRequest) {
   const encoder = new TextEncoder();

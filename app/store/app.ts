@@ -5,7 +5,7 @@ import { type ChatCompletionResponseMessage } from "openai";
 import {
   ControllerPool,
   requestChatStream,
-  requestWithPrompt,
+  requestDialogTopic,
 } from "../requests";
 import { isMobileScreen, trimTopic } from "../utils";
 
@@ -72,6 +72,10 @@ export const ROLES: Message["role"][] = ["system", "user", "assistant"];
 const ENABLE_GPT4 = true;
 
 export const ALL_MODELS = [
+  {
+    name: "chatglm-6b",
+    available: true,
+  },  
   {
     name: "gpt-4",
     available: ENABLE_GPT4,
@@ -147,7 +151,7 @@ const DEFAULT_CONFIG: ChatConfig = {
   disablePromptHint: false,
 
   modelConfig: {
-    model: "gpt-3.5-turbo",
+    model: "chatglm-6b",
     temperature: 1,
     max_tokens: 2000,
     presence_penalty: 0,
@@ -505,7 +509,7 @@ export const useChatStore = create<ChatStore>()(
           session.topic === DEFAULT_TOPIC &&
           countMessages(session.messages) >= SUMMARIZE_MIN_LEN
         ) {
-          requestWithPrompt(session.messages, Locale.Store.Prompt.Topic).then(
+          requestDialogTopic(session.messages, Locale.Store.Prompt.Topic).then(
             (res) => {
               get().updateCurrentSession(
                 (session) =>
