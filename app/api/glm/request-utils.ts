@@ -1,10 +1,11 @@
 import { NextRequest } from "next/server";
 
 const GLM_URL = `http://127.0.0.1:5000/chat_stream`; 
+const BASE_URL = process.env.GLM_URL ?? GLM_URL;
 
 
 export async function requestGlm(req: NextRequest) {
-  return fetch(GLM_URL, {
+  return fetch(BASE_URL, {
     headers: {
       "Content-Type": "application/json"
     },
