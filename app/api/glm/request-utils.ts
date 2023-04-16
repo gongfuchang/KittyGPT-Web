@@ -24,14 +24,13 @@ export async function doCompletion(req: NextRequest) {
   const stream = new ReadableStream({
     async start(controller) {
       // The following function handles each data chunk
-      function onParse(event: any) {
       for await (const chunk of rb as any) {
         const text = decoder.decode(chunk);
         console.log('text-part:' + text);
         controller.enqueue(chunk);
       }
       controller.close();
-    },
+    }
   });
   console.log('return response with 200');
   return new Response(stream, { headers: { "Content-Type": "text/plain"} , status: 200 });
