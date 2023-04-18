@@ -14,7 +14,7 @@ export async function requestGlm(req: NextRequest) {
   })
 }
 
-export async function doCompletion(req: NextRequest) {
+export async function doCompletion(req: NextRequest, streaming: boolean = false) {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
@@ -33,5 +33,5 @@ export async function doCompletion(req: NextRequest) {
     }
   });
   console.log('return response with 200');
-  return new Response(stream, { headers: { "Content-Type": "text/plain"} , status: 200 });
+  return new Response(stream, { headers: { "Content-Type": streaming ? "text/event-stream" : "text/plain"} , status: 200 });
 }
