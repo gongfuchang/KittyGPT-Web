@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { doCompletion } from "./request-utils";
 
 export async function POST(req: NextRequest) {
-  return doCompletion(req, true);
+  return doCompletion(req);
 }
 
 export async function GET(req: NextRequest) {

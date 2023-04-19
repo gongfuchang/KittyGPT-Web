@@ -4,7 +4,7 @@ import { doCompletion } from "../glm/request-utils";
 
 export async function POST(req: NextRequest) {
   try {
-    const resp = doCompletion(req);
+    const resp = doCompletion(req, true);
     return resp;
   } catch (error) {
     console.error("[GLM-Stream]", error);
