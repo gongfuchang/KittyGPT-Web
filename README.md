@@ -5,7 +5,7 @@
 
 Variable GPT models inside one chatbox.
 
-[演示 Demo](kittygpt.cn) / [反馈 Issues](https://github.com/gongfuchang/KittyGPT-Web/issues) /
+[演示 Demo](https://www.kittygpt.cn) / [反馈 Issues](https://github.com/gongfuchang/KittyGPT-Web/issues) /
 
 </div>
 
