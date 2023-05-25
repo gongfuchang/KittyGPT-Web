@@ -593,6 +593,7 @@ export function Chat(props: {
               }}
             />
           </div>
+        {/* 
           {!isMobileScreen() && (
             <div className={styles["window-action-button"]}>
               <IconButton
@@ -605,7 +606,7 @@ export function Chat(props: {
                 }}
               />
             </div>
-          )}
+          )} */}
         </div>
 
         <PromptToast

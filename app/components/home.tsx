@@ -177,7 +177,7 @@ function _Home() {
         <div className={styles["sidebar-header"]}>
           <div className={styles["sidebar-title"]}>KittyGPT</div>
           <div className={styles["sidebar-sub-title"]}>
-            Variable GPT models inside.
+            Variable LLM models inside.
           </div>
           <div className={styles["sidebar-logo"]}>
             <GptIcon />

@@ -3,7 +3,7 @@
 
 <h1 align="center">KittyGPT Web</h1>
 
-Variable GPT models inside one chatbox.
+Variable LLM models inside one chatbox.
 
 [演示 Demo](https://www.kittygpt.cn) / [反馈 Issues](https://github.com/gongfuchang/KittyGPT-Web/issues) /
 

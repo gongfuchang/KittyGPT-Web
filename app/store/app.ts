@@ -77,6 +77,14 @@ export const ALL_MODELS = [
     available: true,
   },  
   {
+    name: "gpt-3.5-turbo",
+    available: true,
+  },
+  {
+    name: "gpt-3.5-turbo-0301",
+    available: true,
+  },
+  {
     name: "gpt-4",
     available: ENABLE_GPT4,
   },
@@ -91,14 +99,6 @@ export const ALL_MODELS = [
   {
     name: "gpt-4-32k-0314",
     available: ENABLE_GPT4,
-  },
-  {
-    name: "gpt-3.5-turbo",
-    available: true,
-  },
-  {
-    name: "gpt-3.5-turbo-0301",
-    available: true,
   },
 ];
 
@@ -140,11 +140,11 @@ const DEFAULT_CONFIG: ChatConfig = {
   historyMessageCount: 4,
   compressMessageLengthThreshold: 1000,
   sendBotMessages: true as boolean,
-  submitKey: SubmitKey.CtrlEnter as SubmitKey,
+  submitKey: SubmitKey.Enter as SubmitKey,
   avatar: "1f603",
   fontSize: 14,
   theme: Theme.Auto as Theme,
-  tightBorder: false,
+  tightBorder: true,
   sendPreviewBubble: true,
   sidebarWidth: 300,
 
