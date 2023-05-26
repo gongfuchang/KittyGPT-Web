@@ -1,5 +1,5 @@
 {
-  "name": "chatgpt-next-web",
+  "name": "kittygpt-web",
   "version": "1.9.3",
   "private": false,
   "license": "Anti 996",
@@ -23,6 +23,7 @@
     "openai": "^3.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.10.0",
     "react-markdown": "^8.0.5",
     "rehype-highlight": "^6.0.0",
     "rehype-katex": "^6.0.2",
@@ -31,7 +32,9 @@
     "remark-math": "^5.1.1",
     "sass": "^1.59.2",
     "spark-md5": "^3.0.2",
-    "use-debounce": "^9.0.3"
+    "use-debounce": "^9.0.3",
+    "zustand": "^4.3.6",
+    "mermaid": "^10.1.0"
   },
   "devDependencies": {
     "@types/node": "^18.14.6",
