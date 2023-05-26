@@ -13,6 +13,8 @@ import AddIcon from "../icons/add.svg";
 import DeleteIcon from "../icons/delete.svg";
 import MaxIcon from "../icons/max.svg";
 import MinIcon from "../icons/min.svg";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Path } from "../constant";
 
 import {
   Message,
@@ -352,6 +354,7 @@ export function Chat(props: {
   const { submitKey, shouldSubmit } = useSubmitHandler();
   const { scrollRef, setAutoScroll } = useScrollToBottom();
   const [hitBottom, setHitBottom] = useState(false);
+  const navigate = useNavigate();
 
   const onChatBodyScroll = (e: HTMLElement) => {
     const isTouchBottom = e.scrollTop + e.clientHeight >= e.scrollHeight - 20;
@@ -567,7 +570,7 @@ export function Chat(props: {
               icon={<ReturnIcon />}
               bordered
               title={Locale.Chat.Actions.ChatList}
-              onClick={props?.showSideBar}
+              onClick={() => navigate(Path.Home)}
             />
           </div>
           <div className={styles["window-action-button"]}>
@@ -593,7 +596,7 @@ export function Chat(props: {
               }}
             />
           </div>
-        {/* 
+          {/* 
           {!isMobileScreen() && (
             <div className={styles["window-action-button"]}>
               <IconButton
@@ -677,17 +680,21 @@ export function Chat(props: {
                   !isUser ? (
                     <LoadingIcon />
                   ) : (
-                    <div
-                      className="markdown-body"
-                      style={{ fontSize: `${fontSize}px` }}
+                    <Markdown
+                      content={message.content}
+                      loading={
+                        (message.preview || message.content.length === 0) &&
+                        !isUser
+                      }
                       onContextMenu={(e) => onRightClick(e, message)}
                       onDoubleClickCapture={() => {
-                        if (!isMobileScreen()) return;
+                        if (!isMobileScreen) return;
                         setUserInput(message.content);
                       }}
-                    >
-                      <Markdown content={message.content} />
-                    </div>
+                      fontSize={fontSize}
+                      parentRef={scrollRef}
+                      defaultShow={i >= messages.length - 10}
+                    />
                   )}
                 </div>
                 {!isUser && !message.preview && (
@@ -727,11 +734,10 @@ export function Chat(props: {
             className={styles["chat-input-send"]}
             noDark
             onClick={onUserSubmit}
-            disabled = {isLoading}
+            disabled={isLoading}
           />
         </div>
       </div>
     </div>
-    
   );
 }

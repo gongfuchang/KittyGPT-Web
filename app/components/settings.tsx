@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, HTMLProps } from "react";
 
 import EmojiPicker, { Theme as EmojiTheme } from "emoji-picker-react";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./settings.module.scss";
 
@@ -33,6 +34,8 @@ import { SearchService, usePromptStore } from "../store/prompt";
 import { requestUsage } from "../requests";
 import { ErrorBoundary } from "./error";
 import { InputRange } from "./input-range";
+
+import { Path } from "../constant";
 
 function SettingItem(props: {
   title: string;
@@ -75,7 +78,7 @@ function PasswordInput(props: HTMLProps<HTMLInputElement>) {
   );
 }
 
-export function Settings(props: { closeSettings: () => void }) {
+export function Settings() {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [config, updateConfig, resetConfig, clearAllData, clearSessions] =
     useChatStore((state) => [
@@ -125,6 +128,8 @@ export function Settings(props: { closeSettings: () => void }) {
   const customCount = promptStore.prompts.size ?? 0;
 
   const showUsage = accessStore.isAuthorized();
+  const navigate = useNavigate();
+
   useEffect(() => {
     checkUpdate();
     showUsage && checkUsage();
@@ -134,7 +139,7 @@ export function Settings(props: { closeSettings: () => void }) {
   useEffect(() => {
     const keydownEvent = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        props.closeSettings();
+        navigate(Path.Home);
       }
     };
     document.addEventListener("keydown", keydownEvent);
@@ -189,7 +194,7 @@ export function Settings(props: { closeSettings: () => void }) {
           <div className={styles["window-action-button"]}>
             <IconButton
               icon={<CloseIcon />}
-              onClick={props.closeSettings}
+              onClick={() => navigate(Path.Home)}
               bordered
               title={Locale.Settings.Actions.Close}
             />
@@ -198,7 +203,7 @@ export function Settings(props: { closeSettings: () => void }) {
       </div>
       <div className={styles["settings"]}>
         <List>
-        {enabledAccessControl ? (
+          {enabledAccessControl ? (
             <SettingItem
               title={Locale.Settings.AccessCode.Title}
               subTitle={Locale.Settings.AccessCode.SubTitle}
@@ -228,7 +233,7 @@ export function Settings(props: { closeSettings: () => void }) {
                 accessStore.updateToken(e.currentTarget.value);
               }}
             />
-          </SettingItem>          
+          </SettingItem>
           <SettingItem title={Locale.Settings.Model}>
             <select
               value={config.modelConfig.model}
@@ -334,7 +339,7 @@ export function Settings(props: { closeSettings: () => void }) {
               </div>
             </Popover>
           </SettingItem>
-{/* 
+          {/* 
           <SettingItem
             title={Locale.Settings.Update.Version(currentId)}
             subTitle={
@@ -456,7 +461,7 @@ export function Settings(props: { closeSettings: () => void }) {
               }
             ></input>
           </SettingItem>
-        </List>        
+        </List>
         <List>
           <SettingItem
             title={Locale.Settings.Usage.Title}
@@ -552,7 +557,6 @@ export function Settings(props: { closeSettings: () => void }) {
             />
           </SettingItem>
         </List>
-
       </div>
     </ErrorBoundary>
   );
