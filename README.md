@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./app/icons/bot.svg" alt="icon" height="50px" width="50px"/>
+<img src="./app/icons/bot.svg" alt="icon" height="100px" width="100px"/>
 
 <h1 align="center">KittyGPT Web</h1>
 
