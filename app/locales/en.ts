@@ -5,7 +5,7 @@ const en: LocaleType = {
   WIP: "WIP...",
   Error: {
     Unauthorized:
-      "Unauthorized access. Please go to [Settings Page](/#/settings) to enter access code, or provide your own OpenAI key.",
+      "Unauthorized access. Please go to [Settings Page](/#/settings) to enter access code, or provide your own OpenAI API key.",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} messages`,
