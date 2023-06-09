@@ -355,12 +355,24 @@
 
 .chat-input-panel {
   width: 100%;
-  padding: 20px;
-  padding-top: 5px;
+  padding: 5px 20px;
   box-sizing: border-box;
   flex-direction: column;
 }
-
+.chat-icp-panel {
+  width: 100%;
+  padding: 8px;
+  padding-top: 0px;
+  flex-direction: column;
+  height: 20px; 
+  text-align: center; 
+  font-size: 12px; 
+}
+.chat-icp-panel a{
+  background-color: transparent;
+  color: var(--color-accent-fg);
+  text-decoration: none;
+}
 @mixin single-line {
   white-space: nowrap;
   overflow: hidden;
@@ -443,7 +455,7 @@
 
   position: absolute;
   right: 30px;
-  bottom: 32px;
+  bottom: 68px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -452,7 +464,7 @@
   }
 
   .chat-input-send {
-    bottom: 30px;
+    bottom: 66px;
   }
 }
 

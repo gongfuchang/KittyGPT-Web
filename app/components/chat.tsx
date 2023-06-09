@@ -738,6 +738,12 @@ export function Chat(props: {
           />
         </div>
       </div>
+
+      <div className={styles["chat-icp-panel"]}>
+        <a href="https://beian.miit.gov.cn/" target="_blank">
+          浙ICP备2023007228号-1
+        </a>
+      </div>
     </div>
   );
 }
