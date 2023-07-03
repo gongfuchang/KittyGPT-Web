@@ -17,6 +17,8 @@ async function createStream(req: NextRequest) {
     return "```json\n" + content + "```";
   }
 
+  // const queueingStrategy = new CountQueuingStrategy({ highWaterMark: 1 });
+
   const stream = new ReadableStream({
     async start(controller) {
       function onParse(event: any) {
@@ -29,9 +31,19 @@ async function createStream(req: NextRequest) {
           }
           try {
             const json = JSON.parse(data);
+            const choice = json.choices[0];
+            if (choice?.finish_reason) {
+              console.log("[Stream-finished]" + choice.finish_reason);
+              controller.close();
+              return;
+            }
             const text = json.choices[0].delta.content;
-            const queue = encoder.encode(text);
-            controller.enqueue(queue);
+            // console.log('[Stream-choice]' + JSON.stringify(json.choices[0]));
+            if (text) {
+              console.log("[Stream-content]" + text);
+              const queue = encoder.encode(text);
+              controller.enqueue(queue);
+            }
           } catch (e) {
             controller.error(e);
           }
@@ -40,7 +52,12 @@ async function createStream(req: NextRequest) {
 
       const parser = createParser(onParse);
       for await (const chunk of res.body as any) {
-        parser.feed(decoder.decode(chunk));
+        const it = decoder.decode(chunk);
+        // console.log('[txt111]' + txt);
+        // txt.split('\n').filter(it=>it.length >0).forEach(function(it){
+        console.log("[txt]" + it);
+        parser.feed(it);
+        // });
       }
     },
   });
