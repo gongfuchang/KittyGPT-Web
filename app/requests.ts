@@ -54,7 +54,7 @@ function getHeaders() {
 }
 
 export function requestModelAgent(path: string) {
-  return (body: any, method = "POST") =>
+  return (body: any, method = "POST", duplex = true) =>
     fetch(getPrefixRoute(false) + "?_vercel_no_cache=1", {
       method,
       headers: {

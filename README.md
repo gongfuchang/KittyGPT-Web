@@ -1,11 +1,11 @@
 <div align="center">
 <img src="./app/icons/bot.svg" alt="icon" height="100px" width="100px"/>
 
-<h1 align="center">KittyGPT Web</h1>
+<h1 align="center">Quick Mind Web</h1>
 
 Variable LLM models inside one chatbox.
 
-[演示 Demo](https://www.kittygpt.cn) / [反馈 Issues](https://github.com/gongfuchang/KittyGPT-Web/issues) /
+[演示 Demo](https://www.danflow.cn) / [反馈 Issues](https://github.com/gongfuchang/quick_mind_doris/issues) /
 
 </div>
 

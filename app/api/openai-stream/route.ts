@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
     const stream = await createStream(req);
     return new Response(stream);
   } catch (error) {
-    console.error("[Chat Stream]", error);
+    console.trace("[Chat Stream]", error);
     return new Response(
       ["```json\n", JSON.stringify(error, null, "  "), "\n```"].join(""),
     );

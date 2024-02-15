@@ -36,6 +36,7 @@ async function _requestOpenaiApi(req: NextRequest) {
     },
     method: req.method,
     body: req.body,
+    duplex: 'half'
   });
 }
 async function _requestAzureApi(req: NextRequest) {
